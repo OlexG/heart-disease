@@ -13,20 +13,18 @@ heart-disease/
 │   └── artifacts/
 │       ├── features_model_ready.csv      # Preprocessed data (ready for ML)
 │       └── heart_disease_cleaned.csv     # Cleaned data
-└── model-java/                     # Java Random Forest implementation
-    ├── pom.xml
-    └── src/main/java/com/heartdisease/model/
-        ├── RandomForest.java       # Random Forest classifier
-        ├── DecisionTree.java       # Decision tree implementation
-        ├── Dataset.java            # Data container
-        ├── DataLoader.java         # CSV loading utilities
-        └── Main.java               # Example usage
+└── src/                            # Java Random Forest implementation
+    ├── RandomForest.java           # Random Forest classifier
+    ├── DecisionTree.java           # Decision tree implementation
+    ├── Dataset.java                # Data container
+    ├── DataLoader.java             # CSV loading utilities
+    ├── TreeMatrix.java             # Matrix operations for tree building
+    └── Main.java                   # Example usage
 ```
 
 ## Prerequisites
 
 - **Java 11** or higher
-- **Maven 3.6+**
 - **Python 3.8+** (for data preprocessing)
 
 ## Setup and Running
@@ -44,17 +42,19 @@ Run all cells to generate the preprocessed data files in `python-analysis/artifa
 
 ### 2. Build and Run Java Model
 
-Navigate to the Java project directory and build:
+Run the project directly from the command line (no external build tools required).
+
+**From the project root directory:**
 
 ```bash
-cd model-java
-mvn clean compile
-```
+# Compile
+javac src/*.java
 
-Run the Random Forest model:
+# Run (default: visualizes tree #0)
+java -cp src Main
 
-```bash
-mvn exec:java -Dexec.mainClass="com.heartdisease.model.Main"
+# Run (optional: visualize specific tree index, e.g., tree #5)
+java -cp src Main 5
 ```
 
 ### 3. Expected Output
@@ -87,16 +87,31 @@ Training Random Forest...
 Training accuracy: 0.XXXX
 Test accuracy: 0.XXXX
 
-Example prediction on first test sample:
-  Predicted class: X
-  Probability: 0.XXXX
-  Actual class: X
-  Correct: true/false
+=== Detailed Predictions on First 5 Test Samples ===
+
+Sample #1
+  Prediction: No Heart Disease (XX.X% confidence)
+  Actual:     No Heart Disease
+  Result:     CORRECT
 ```
+
+### 4. Visualizing the Decision Tree
+
+After training, the program generates a `.dot` file for the visualized tree in the project root (default `tree_viz_0.dot`). This file represents the structure of the specific decision tree from the forest.
+
+To view this visualization:
+
+1.  **Install Graphviz** (if not already installed).
+2.  **Convert the .dot file to an image** using the command line:
+    # Example for tree #0
+    dot -Tpng tree_viz_0.dot -o tree_viz_0.png
+    3.  Open `tree_viz_0.png` to see the decision nodes and splits.
+
+*Note: You can also copy the contents of the `.dot` file and paste them into online viewers like [Viz-js.com](http://viz-js.com/) or [GraphvizOnline](https://dreampuf.github.io/GraphvizOnline/).*
 
 ## Model Configuration
 
-The Random Forest model can be configured in [model-java/src/main/java/com/heartdisease/model/Main.java](model-java/src/main/java/com/heartdisease/model/Main.java):
+The Random Forest model can be configured in [`src/Main.java`](src/Main.java):
 
 - `numTrees`: Number of decision trees (default: 100)
 - `maxDepth`: Maximum depth of each tree (default: 10)
@@ -113,26 +128,16 @@ The model uses 20 numeric features:
 
 **Target**: heart_disease_status (0 = No, 1 = Yes)
 
-## Running Tests
-
-```bash
-cd model-java
-mvn test
-```
-
 ## Dependencies
 
-Java dependencies (managed by Maven):
-- Apache Commons CSV 1.10.0 - CSV file parsing
-- Apache Commons Math3 3.6.1 - Statistical functions
-- JUnit 5.9.3 - Testing framework
+- **None** (Standard Java Standard Library only)
 
 ## Implementation Details
 
 The Random Forest implementation includes:
 - **Bootstrap Aggregating (Bagging)**: Each tree trained on random sample with replacement
 - **Random Feature Selection**: Each split considers random subset of features
-- **Gini Impurity**: Criterion for selecting best splits
+- **Information Gain Ratio (Entropy)**: Criterion for selecting best splits
 - **Majority Voting**: Final prediction based on votes from all trees
 - **Probability Estimation**: Based on proportion of positive votes
 

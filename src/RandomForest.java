@@ -1,5 +1,3 @@
-package com.heartdisease.model;
-
 import java.util.*;
 
 /**
@@ -126,5 +124,9 @@ public class RandomForest {
 
     public int getMaxFeatures() {
         return maxFeatures;
+    }
+
+    public List<DecisionTree> getTrees() {
+        return trees;
     }
 }

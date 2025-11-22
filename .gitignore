@@ -1,123 +1,27 @@
-# Java
+# Java compiled files
 *.class
+*.log
 *.jar
 *.war
-*.ear
-*.log
 
-# Maven
-model-java/target/
-model-java/pom.xml.tag
-model-java/pom.xml.releaseBackup
-model-java/pom.xml.versionsBackup
-model-java/pom.xml.next
-model-java/release.properties
-model-java/dependency-reduced-pom.xml
-model-java/buildNumber.properties
-model-java/.mvn/timing.properties
-model-java/.mvn/wrapper/maven-wrapper.jar
-
-# IntelliJ IDEA
+# IDEs
 .idea/
+.vscode/
 *.iml
-*.iws
-*.ipr
-out/
-
-# Eclipse
 .classpath
 .project
 .settings/
-bin/
-
-# VS Code
-.vscode/
-*.code-workspace
-
-# NetBeans
-nbproject/private/
-build/
-nbbuild/
-dist/
-nbdist/
-.nb-gradle/
 
 # Python
 __pycache__/
 *.py[cod]
-*$py.class
-*.so
-.Python
-env/
 venv/
-ENV/
-build/
-develop-eggs/
-dist/
-downloads/
-eggs/
-.eggs/
-lib/
-lib64/
-parts/
-sdist/
-var/
-wheels/
-*.egg-info/
-.installed.cfg
-*.egg
-MANIFEST
+.ipynb_checkpoints/
 
-# Jupyter Notebook
-.ipynb_checkpoints
-*/.ipynb_checkpoints/*
-
-# PyCharm
-.idea/
-
-# macOS
+# System
 .DS_Store
-.AppleDouble
-.LSOverride
-Icon
-._*
+Thumbs.db
 
-# Thumbnails
-*.bmp
-*.dib
-*.tif
-*.tiff
-
-# Files that might appear in the root of a volume
-.DocumentRevisions-V100
-.fseventsd
-.Spotlight-V100
-.TemporaryItems
-.Trashes
-.VolumeIcon.icns
-.com.apple.timemachine.donotpresent
-
-# Directories potentially created on remote AFP share
-.AppleDB
-.AppleDesktop
-Network Trash Folder
-Temporary Items
-.apdisk
-
-# Logs
-logs/
-*.log
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-
-# Temporary files
-*.tmp
-*.temp
-*.swp
-*.swo
-*~
-
-# Data files (optional - uncomment if you want to exclude large data files)
-# data/*.csv
-# python-analysis/artifacts/*.csv
+# Project Artifacts
+tree_viz.png
+tree_viz.dot
