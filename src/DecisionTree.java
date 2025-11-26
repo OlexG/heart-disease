@@ -69,7 +69,17 @@ public class DecisionTree {
                     : "Feat " + node.featureIndex;
             
             // Add count to label
-            String label = featureName + "\\n<= " + String.format("%.3f", node.threshold) + "\\n(n=" + node.sampleCount + ")";
+            String splitCondition;
+            if (node.categoricalValues != null) {
+                // Categorical split: show category membership
+                ArrayList<Integer> sortedCats = new ArrayList<>(node.categoricalValues);
+                Collections.sort(sortedCats);
+                splitCondition = "in {" + sortedCats.toString().replaceAll("[\\[\\] ]", "") + "}";
+            } else {
+                // Numerical split: show threshold
+                splitCondition = "<= " + String.format("%.3f", node.threshold);
+            }
+            String label = featureName + "\\n" + splitCondition + "\\n(n=" + node.sampleCount + ")";
             
             sb.append("  ").append(myId).append(" [label=\"").append(label).append("\"];\n");
             
@@ -107,7 +117,7 @@ public class DecisionTree {
 
         // Find best attribute to split on
         for (int attribute : candidateAttributes) {
-            double igr = matrix.computeIGR(attribute, rows);
+            double igr = matrix.computeIGR(attribute, rows, entropy);
             if (igr > bestIGR) {
                 bestIGR = igr;
                 bestAttribute = attribute;
@@ -143,17 +153,38 @@ public class DecisionTree {
             return new Node(leftChild.predictedClass, rows.size());
         }
 
-        return new Node(bestAttribute, matrix.getSplitThreshold(bestAttribute), leftChild, rightChild, rows.size());
+        // Check if this is a categorical split
+        Set<Integer> categoricalSplit = null;
+        double threshold = 0.0;
+        if (matrix.isCategorical(bestAttribute)) {
+            categoricalSplit = matrix.getCategoricalSplit(bestAttribute);
+        } else {
+            threshold = matrix.getSplitThreshold(bestAttribute);
+        }
+
+        return new Node(bestAttribute, threshold, categoricalSplit, leftChild, rightChild, rows.size());
     }
 
     private int predictNode(Node node, double[] features) {
         if (node.isLeaf()) {
             return node.predictedClass;
         }
-        if (features[node.featureIndex] <= node.threshold) {
-            return predictNode(node.left, features);
+        
+        if (node.categoricalValues != null) {
+            // Categorical split: check if feature value is in categoricalValues set
+            int categoryValue = (int) features[node.featureIndex];
+            if (node.categoricalValues.contains(categoryValue)) {
+                return predictNode(node.left, features);
+            } else {
+                return predictNode(node.right, features);
+            }
         } else {
-            return predictNode(node.right, features);
+            // Numerical split: use threshold
+            if (features[node.featureIndex] <= node.threshold) {
+                return predictNode(node.left, features);
+            } else {
+                return predictNode(node.right, features);
+            }
         }
     }
 
@@ -163,6 +194,7 @@ public class DecisionTree {
     private static class Node {
         int featureIndex;
         double threshold;
+        Set<Integer> categoricalValues; // null for numerical splits, non-null for categorical
         Node left;
         Node right;
         int predictedClass;
@@ -173,9 +205,10 @@ public class DecisionTree {
             this.sampleCount = sampleCount;
         }
 
-        Node(int featureIndex, double threshold, Node left, Node right, int sampleCount) {
+        Node(int featureIndex, double threshold, Set<Integer> categoricalValues, Node left, Node right, int sampleCount) {
             this.featureIndex = featureIndex;
             this.threshold = threshold;
+            this.categoricalValues = categoricalValues;
             this.left = left;
             this.right = right;
             this.predictedClass = -1;
