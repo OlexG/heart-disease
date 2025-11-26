@@ -1,4 +1,6 @@
 import java.util.*;
+import java.util.stream.IntStream;
+import java.util.stream.Collectors;
 
 /**
  * Random Forest classifier for binary classification on numeric data
@@ -30,16 +32,30 @@ public class RandomForest {
     public void fit(Dataset dataset) {
         trees.clear();
 
+        // Pre-generate seeds for reproducibility
+        long[] treeSeeds = new long[numTrees];
         for (int i = 0; i < numTrees; i++) {
-            // Create bootstrap sample
-            Dataset bootstrapSample = createBootstrapSample(dataset);
-
-            // Train decision tree
-            DecisionTree tree = new DecisionTree(maxDepth, minSamplesSplit, maxFeatures, random);
-            tree.fit(bootstrapSample);
-
-            trees.add(tree);
+            treeSeeds[i] = random.nextLong();
         }
+
+        // Parallel training
+        List<DecisionTree> trainedTrees = IntStream.range(0, numTrees).parallel()
+            .mapToObj(i -> {
+                long seed = treeSeeds[i];
+                Random treeRandom = new Random(seed);
+
+                // Create bootstrap sample
+                Dataset bootstrapSample = createBootstrapSample(dataset, treeRandom);
+
+                // Train decision tree
+                DecisionTree tree = new DecisionTree(maxDepth, minSamplesSplit, maxFeatures, treeRandom);
+                tree.fit(bootstrapSample);
+                
+                return tree;
+            })
+            .collect(Collectors.toList());
+            
+        trees.addAll(trainedTrees);
     }
 
     /**
@@ -69,8 +85,9 @@ public class RandomForest {
 
     /**
      * Predict probability for a single sample
+     * for binary classification
      */
-    public double predictProba(double[] features) {
+    public double predictProbability(double[] features) {
         int positiveVotes = 0;
 
         for (DecisionTree tree : trees) {
@@ -79,7 +96,8 @@ public class RandomForest {
             }
         }
 
-        return (double) positiveVotes / trees.size();
+        // Apply Laplace smoothing for binary classification
+        return (positiveVotes + 1.0) / (trees.size() + 2.0);
     }
 
     /**
@@ -99,12 +117,12 @@ public class RandomForest {
     /**
      * Create a bootstrap sample (sampling with replacement)
      */
-    private Dataset createBootstrapSample(Dataset dataset) {
+    private Dataset createBootstrapSample(Dataset dataset, Random rng) {
         int numSamples = dataset.getNumSamples();
         int[] indices = new int[numSamples];
 
         for (int i = 0; i < numSamples; i++) {
-            indices[i] = random.nextInt(numSamples);
+            indices[i] = rng.nextInt(numSamples);
         }
 
         return dataset.subset(indices);
