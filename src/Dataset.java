@@ -1,8 +1,3 @@
-package com.heartdisease.model;
-
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * Represents a dataset with features and labels for training/testing
  */
@@ -12,9 +7,6 @@ public class Dataset {
     private final String[] featureNames;
 
     public Dataset(double[][] features, int[] labels, String[] featureNames) {
-        if (features.length != labels.length) {
-            throw new IllegalArgumentException("Number of samples must match number of labels");
-        }
         this.features = features;
         this.labels = labels;
         this.featureNames = featureNames;

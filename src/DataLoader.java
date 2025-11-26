@@ -1,15 +1,5 @@
-package com.heartdisease.model;
-
-import org.apache.commons.csv.CSVFormat;
-import org.apache.commons.csv.CSVParser;
-import org.apache.commons.csv.CSVRecord;
-
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.Reader;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.io.*;
+import java.util.*;
 
 /**
  * Utility class for loading CSV data
@@ -18,32 +8,47 @@ public class DataLoader {
 
     /**
      * Load dataset from CSV file
-     * Assumes last column is the target variable
      */
     public static Dataset loadFromCSV(String filePath) throws IOException {
-        try (Reader reader = new FileReader(filePath);
-             CSVParser csvParser = new CSVParser(reader, CSVFormat.DEFAULT.withFirstRecordAsHeader())) {
+        List<double[]> featuresList = new ArrayList<>();
+        List<Integer> labelsList = new ArrayList<>();
+        List<String> headers = new ArrayList<>();
 
-            List<String> headers = new ArrayList<>(csvParser.getHeaderNames());
+        try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
+            // 1. Read Header
+            String line = br.readLine();
+            if (line != null) {
+                String[] parts = line.split(",");
+                for (String p : parts) {
+                    headers.add(p.trim());
+                }
+            }
+
             int numFeatures = headers.size() - 1; // Last column is target
+            String[] featureNames = new String[numFeatures];
+            for(int i = 0; i < numFeatures; i++) {
+                featureNames[i] = headers.get(i);
+            }
 
-            String[] featureNames = headers.subList(0, numFeatures).toArray(new String[0]);
-
-            List<double[]> featuresList = new ArrayList<>();
-            List<Integer> labelsList = new ArrayList<>();
-
-            for (CSVRecord record : csvParser) {
+            // 2. Read Data Rows
+            while ((line = br.readLine()) != null) {
+                if (line.trim().isEmpty()) continue;
+                
+                String[] parts = line.split(",");
                 double[] features = new double[numFeatures];
+                
+                // Parse features
                 for (int i = 0; i < numFeatures; i++) {
-                    features[i] = Double.parseDouble(record.get(i));
+                    features[i] = Double.parseDouble(parts[i].trim());
                 }
                 featuresList.add(features);
 
-                // Last column is target
-                int label = (int) Double.parseDouble(record.get(numFeatures));
+                // Parse label (last column)
+                int label = (int) Double.parseDouble(parts[numFeatures].trim());
                 labelsList.add(label);
             }
 
+            // Convert Lists to Arrays for Dataset
             double[][] featuresArray = featuresList.toArray(new double[0][]);
             int[] labelsArray = labelsList.stream().mapToInt(Integer::intValue).toArray();
 
