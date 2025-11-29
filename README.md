@@ -8,18 +8,21 @@ This project implements a Random Forest classifier from scratch in Java for pred
 heart-disease/
 ├── data/                           # Raw dataset
 │   └── heart_disease.csv
+├── outputs/                        # Auto-generated run artifacts (JSON/CSV/logs)
 ├── python-analysis/                # Data preprocessing and EDA
 │   ├── heart_disease_eda.ipynb    # Jupyter notebook for analysis
 │   └── artifacts/
 │       ├── features_model_ready.csv      # Preprocessed data (ready for ML)
 │       └── heart_disease_cleaned.csv     # Cleaned data
+├── python-evaluation/              # Notebook for analyzing Java run outputs
+│   └── model_outputs_analysis.ipynb
 └── src/                            # Java Random Forest implementation
     ├── RandomForest.java           # Random Forest classifier
     ├── DecisionTree.java           # Decision tree implementation
     ├── Dataset.java                # Data container
     ├── DataLoader.java             # CSV loading utilities
     ├── TreeMatrix.java             # Matrix operations for tree building
-    └── Main.java                   # Example usage
+    └── Main.java                   # Training + artifact generation entry point
 ```
 
 ## Prerequisites
@@ -57,42 +60,23 @@ java -cp src Main
 java -cp src Main 5
 ```
 
-### 3. Expected Output
+### 3. Expected Output & Artifacts
 
-The program will:
-- Load the preprocessed dataset (10,000 samples, 20 features)
-- Split into 80% training, 20% test
-- Train a Random Forest with 100 trees
-- Report training and test accuracy
-- Show an example prediction
+During training the program still streams progress to the console, but it also writes a full artifact bundle under `outputs/run_<timestamp>/`, including:
 
-Example output:
+- `run_summary.json` – dataset stats, chosen hyperparameters, metrics, confusion matrix
+- `test_predictions.csv` – per-sample prediction, probability, and correctness flags
+- `process_log.txt` – the full console log for traceability
+- `tree_viz_<idx>.dot` – requested tree visualization (if a valid index was provided)
+
+Console output continues to show the high-level flow:
 ```
 Loading dataset...
 Dataset loaded:
   Samples: 10000
   Features: 20
-
-Splitting dataset (80% train, 20% test)...
-  Train samples: 8000
-  Test samples: 2000
-
-Training Random Forest...
-  Number of trees: 100
-  Max depth: 10
-  Min samples split: 2
-  Max features: 4
-  Training completed in XXXXms
-
-Training accuracy: 0.XXXX
-Test accuracy: 0.XXXX
-
-=== Detailed Predictions on First 5 Test Samples ===
-
-Sample #1
-  Prediction: No Heart Disease (XX.X% confidence)
-  Actual:     No Heart Disease
-  Result:     CORRECT
+...
+Artifacts available in: /abs/path/to/outputs/run_YYYYMMDD_HHMMSS
 ```
 
 ### 4. Visualizing the Decision Tree
@@ -108,6 +92,17 @@ To view this visualization:
     3.  Open `tree_viz_0.png` to see the decision nodes and splits.
 
 *Note: You can also copy the contents of the `.dot` file and paste them into online viewers like [Viz-js.com](http://viz-js.com/) or [GraphvizOnline](https://dreampuf.github.io/GraphvizOnline/).*
+
+### 5. Post-run Evaluation (Python)
+
+After a Java run finishes, launch the evaluation notebook to inspect metrics, plots, and logs in one place:
+
+```bash
+cd python-evaluation
+jupyter notebook model_outputs_analysis.ipynb
+```
+
+The notebook automatically selects the most recent `outputs/run_*` folder, loads the artifacts, reproduces the reported metrics, visualizes the confusion matrix, and plots probability calibration to help diagnose model quality.
 
 ## Model Configuration
 

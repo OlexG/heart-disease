@@ -1,3 +1,9 @@
+# Generated Java build artifacts
+src/*.class
+
+# Run outputs (per-execution folders)
+outputs/run_*/
+outputs/run_*
 # Java compiled files
 *.class
 *.log
@@ -16,6 +22,8 @@
 __pycache__/
 *.py[cod]
 venv/
+.venv/
+python-evaluation/.venv/
 .ipynb_checkpoints/
 
 # System

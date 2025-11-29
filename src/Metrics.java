@@ -1,5 +1,3 @@
-import java.util.*;
-
 /**
  * Utility class for calculating evaluation metrics for binary classification
  */
@@ -91,6 +89,13 @@ public class Metrics {
         }
         
         return new int[]{tp, fp, tn, fn};
+    }
+    
+    /**
+     * Expose confusion matrix counts for downstream reporting.
+     */
+    public static int[] confusionMatrixCounts(int[] predictions, int[] actual) {
+        return confusionMatrix(predictions, actual);
     }
     
     /**
