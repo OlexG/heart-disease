@@ -1,0 +1,20 @@
+digraph DecisionTree {
+  node [shape=box, fontname="Arial"];
+  0 [label="sleep_hours\n<= 4.002\n(n=8000)"];
+  1 [label="Disease\n(n=1)", style=filled, fillcolor="#ffe6e6"];
+  0 -> 1 [label="True", fontsize=10];
+  2 [label="bmi\n<= 18.018\n(n=7999)"];
+  3 [label="triglyceride_level\n<= 223.000\n(n=7)"];
+  4 [label="No Disease\n(n=1)", style=filled, fillcolor="#e5f5e0"];
+  3 -> 4 [label="True", fontsize=10];
+  5 [label="Disease\n(n=6)", style=filled, fillcolor="#ffe6e6"];
+  3 -> 5 [label="False", fontsize=10];
+  2 -> 3 [label="True", fontsize=10];
+  6 [label="crp_level\n<= 0.023\n(n=7992)"];
+  7 [label="Disease\n(n=3)", style=filled, fillcolor="#ffe6e6"];
+  6 -> 7 [label="True", fontsize=10];
+  8 [label="No Disease\n(n=7989)", style=filled, fillcolor="#e5f5e0"];
+  6 -> 8 [label="False", fontsize=10];
+  2 -> 6 [label="False", fontsize=10];
+  0 -> 2 [label="False", fontsize=10];
+}

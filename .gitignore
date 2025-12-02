@@ -1,9 +1,6 @@
 # Generated Java build artifacts
 src/*.class
 
-# Run outputs (per-execution folders)
-outputs/run_*/
-outputs/run_*
 # Java compiled files
 *.class
 *.log

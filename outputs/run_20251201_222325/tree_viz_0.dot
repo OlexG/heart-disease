@@ -1,0 +1,12 @@
+digraph DecisionTree {
+  node [shape=box, fontname="Arial"];
+  0 [label="sleep_hours\n<= 4.003\n(n=3158)"];
+  1 [label="No Disease\n(n=2)", style=filled, fillcolor="#e5f5e0"];
+  0 -> 1 [label="True", fontsize=10];
+  2 [label="bmi\n<= 39.993\n(n=3156)"];
+  3 [label="Disease\n(n=3155)", style=filled, fillcolor="#ffe6e6"];
+  2 -> 3 [label="True", fontsize=10];
+  4 [label="No Disease\n(n=1)", style=filled, fillcolor="#e5f5e0"];
+  2 -> 4 [label="False", fontsize=10];
+  0 -> 2 [label="False", fontsize=10];
+}

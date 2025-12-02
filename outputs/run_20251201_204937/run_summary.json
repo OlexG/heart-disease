@@ -1,0 +1,38 @@
+{
+  "runId": "run_20251201_204937",
+  "timestamp": "2025-12-01T20:49:37.715628",
+  "dataset": {
+    "path": "python-analysis/artifacts/features_model_ready.csv",
+    "features": 20,
+    "trainSamples": 8000,
+    "testSamples": 2000
+  },
+  "optimizationMetric": "F1_SCORE",
+  "hyperparameters": {
+    "numTrees": 50,
+    "maxDepth": null,
+    "minSamplesSplit": 2,
+    "maxFeatures": 10
+  },
+  "training": {
+    "durationMs": 15499
+  },
+  "trainMetrics": {
+    "accuracy": 0.9993,
+    "precision": 1.0000,
+    "recall": 0.9962,
+    "f1": 0.9981
+  },
+  "testMetrics": {
+    "accuracy": 0.7665,
+    "precision": 0.1290,
+    "recall": 0.0190,
+    "f1": 0.0331
+  },
+  "testConfusionMatrix": {
+    "truePositives": 8,
+    "falsePositives": 54,
+    "trueNegatives": 1525,
+    "falseNegatives": 413
+  }
+}

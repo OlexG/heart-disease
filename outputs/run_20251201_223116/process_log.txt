@@ -1,0 +1,82 @@
+Saving run artifacts to: /Users/ogorpynich/Desktop/data466/heart-disease466/outputs/run_20251201_223116
+Loading dataset...
+Dataset loaded:
+  Samples: 10000
+  Features: 20
+
+Splitting dataset (80% train, 20% test)...
+  Train samples: 8000
+  Test samples: 2000
+  Train class distribution (before balance): neg=6421, pos=1579
+Balancing training set to 50/50...
+  Train samples after balance: 3158 (neg=1579, pos=1579)
+
+=== Hyperparameter Grid Definition ===
+  numTrees: [50, 100, 200, 300]
+  maxDepth: [5, 10, 15, 20, null]
+  minSamplesSplit: [2, 5, 10, 20]
+  maxFeatures: [4, 4, 6, 10]
+  Total combinations: 320
+
+Best Hyperparameters (optimizing for F1_SCORE):
+  numTrees: 200
+  maxDepth: 10
+  minSamplesSplit: 2
+  maxFeatures: 6
+  Best F1_SCORE: 0.6607 (mean: 0.6607, std: 0.0045)
+
+=== Training Final Model with Best Hyperparameters ===
+  Number of trees: 200
+  Max depth: 10
+  Min samples split: 2
+  Max features: 6
+  Training completed in 513ms
+
+=== Comprehensive Model Evaluation on Test Set ===
+Accuracy:  0.2190
+F1 Score: 0.3448
+Precision:0.2094
+Recall:   0.9762
+
+Confusion Matrix:
+                Predicted
+                0      1
+Actual  0      27  1552
+        1      10   411
+TP: 411, FP: 1552, TN: 27, FN: 10
+
+=== Training Set Evaluation (for comparison) ===
+Accuracy:  0.5212
+F1 Score: 0.6758
+Precision:0.5109
+Recall:   0.9981
+
+Saving visualization of tree 0...
+  Saved to: /Users/ogorpynich/Desktop/data466/heart-disease466/outputs/run_20251201_223116/tree_viz_0.dot
+
+=== Detailed Predictions on First 5 Test Samples ===
+
+Sample #1
+  Prediction: Heart Disease (65.8% confidence)
+  Actual:     No Heart Disease
+  Result:     INCORRECT
+
+Sample #2
+  Prediction: Heart Disease (66.3% confidence)
+  Actual:     Heart Disease
+  Result:     CORRECT
+
+Sample #3
+  Prediction: Heart Disease (66.3% confidence)
+  Actual:     No Heart Disease
+  Result:     INCORRECT
+
+Sample #4
+  Prediction: Heart Disease (67.8% confidence)
+  Actual:     No Heart Disease
+  Result:     INCORRECT
+
+Sample #5
+  Prediction: Heart Disease (65.8% confidence)
+  Actual:     No Heart Disease
+  Result:     INCORRECT

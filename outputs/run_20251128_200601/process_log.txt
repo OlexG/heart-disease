@@ -1,0 +1,79 @@
+Saving run artifacts to: /Users/ogorpynich/Desktop/data466/heart-disease466/outputs/run_20251128_200601
+Loading dataset...
+Dataset loaded:
+  Samples: 10000
+  Features: 20
+
+Splitting dataset (80% train, 20% test)...
+  Train samples: 8000
+  Test samples: 2000
+
+=== Hyperparameter Grid Definition ===
+  numTrees: [50, 100, 200, 300]
+  maxDepth: [5, 10, 15, 20, null]
+  minSamplesSplit: [2, 5, 10, 20]
+  maxFeatures: [4, 4, 6, 10]
+  Total combinations: 320
+
+Best Hyperparameters (optimizing for ACCURACY):
+  numTrees: 100
+  maxDepth: 5
+  minSamplesSplit: 2
+  maxFeatures: 4
+  Best ACCURACY: 0.8024 (mean: 0.8024, std: 0.0101)
+
+=== Training Final Model with Best Hyperparameters ===
+  Number of trees: 100
+  Max depth: 5
+  Min samples split: 2
+  Max features: 4
+  Training completed in 187ms
+
+=== Comprehensive Model Evaluation on Test Set ===
+Accuracy:  0.7895
+F1 Score: 0.0000
+Precision:0.0000
+Recall:   0.0000
+
+Confusion Matrix:
+                Predicted
+                0      1
+Actual  0    1579     0
+        1     421     0
+TP: 0, FP: 0, TN: 1579, FN: 421
+
+=== Training Set Evaluation (for comparison) ===
+Accuracy:  0.8026
+F1 Score: 0.0000
+Precision:0.0000
+Recall:   0.0000
+
+Saving visualization of tree 0...
+  Saved to: /Users/ogorpynich/Desktop/data466/heart-disease466/outputs/run_20251128_200601/tree_viz_0.dot
+
+=== Detailed Predictions on First 5 Test Samples ===
+
+Sample #1
+  Prediction: No Heart Disease (99.0% confidence)
+  Actual:     No Heart Disease
+  Result:     CORRECT
+
+Sample #2
+  Prediction: No Heart Disease (99.0% confidence)
+  Actual:     Heart Disease
+  Result:     INCORRECT
+
+Sample #3
+  Prediction: No Heart Disease (99.0% confidence)
+  Actual:     No Heart Disease
+  Result:     CORRECT
+
+Sample #4
+  Prediction: No Heart Disease (99.0% confidence)
+  Actual:     No Heart Disease
+  Result:     CORRECT
+
+Sample #5
+  Prediction: No Heart Disease (99.0% confidence)
+  Actual:     No Heart Disease
+  Result:     CORRECT
