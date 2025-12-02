@@ -23,7 +23,7 @@ public class Main {
             "high_ldl_cholesterol", "alcohol_consumption", "stress_level",
             "sugar_consumption"
         };
-        String dataPath = "python-analysis/artifacts/features_model_ready.csv";
+        String dataPath = "python-analysis/artifacts/features_model_ready_balanced.csv";
 
         try {
             RunOutputs runOutputs = new RunOutputs();
