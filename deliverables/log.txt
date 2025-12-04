@@ -2,6 +2,6 @@ Ryan Gertz: ~5h on scoring logic (F1/precision/recall computations in `src/Metri
 
 Oleks Gorpy: ~5h on Python data work (`python-analysis/heart_disease_eda.ipynb`, SMOTE export in `python-analysis/artifacts/`, and evaluation notebook `python-evaluation/model_outputs_analysis.ipynb`) plus follow-up fixes driven by those notebooks.
 
-Zaid Khan: ~6h adapting the lab tree to numeric features and entropy math (`src/DecisionTree.java`, `src/TreeMatrix.java`, and `RandomForest.java` plumbing).
+Zaid Ruiz: ~6h adapting the lab tree to numeric features and entropy math (`src/DecisionTree.java`, `src/TreeMatrix.java`, and `RandomForest.java` plumbing).
 
 Jesus Avalos: ~5h implementing/tuning the Java grid search (`src/HyperparameterTuner.java`, tuning hooks in `src/Main.java`) and iterating fold/metric settings. + Overall hyper parameter tuning.
