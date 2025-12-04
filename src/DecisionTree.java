@@ -139,8 +139,6 @@ public class DecisionTree {
             return new Node(matrix.getMostCommonValue(rows), rows.size());
         }
 
-        // Create child nodes
-        // "exhausted" means we remove the used attribute for the children
         ArrayList<Integer> remainingAttributes = new ArrayList<>(availableAttributes);
         remainingAttributes.remove(Integer.valueOf(bestAttribute));
 

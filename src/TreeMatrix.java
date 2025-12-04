@@ -56,7 +56,6 @@ public class TreeMatrix {
         }
 
         // Numerical attribute - use existing threshold-based logic
-        // double parentEntropy = findEntropy(rows); // Removed redundant calculation
 
         // Sort rows based on feature value to find best split
         ArrayList<Integer> sortedRows = new ArrayList<>(rows);
@@ -217,7 +216,6 @@ public class TreeMatrix {
         int numSamples = rows.size();
         if (numSamples <= 1) return 0.0;
 
-        // double parentEntropy = findEntropy(rows); // Removed redundant calculation
 
         // Find all unique category values
         Set<Integer> uniqueCategories = new HashSet<>();
@@ -276,7 +274,6 @@ public class TreeMatrix {
             leftCategories.add(category);
             
             // Move samples with this category from right to left
-            // OPTIMIZED: Use pre-calculated categoryClassCounts instead of iterating rows
             Map<Integer, Integer> currentCatCounts = categoryClassCounts.get(category);
             if (currentCatCounts != null) {
                 for (Map.Entry<Integer, Integer> entry : currentCatCounts.entrySet()) {

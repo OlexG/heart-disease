@@ -18,7 +18,6 @@ public class DataLoader {
         List<String> headers = new ArrayList<>();
 
         try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
-            // 1. Read Header
             String line = br.readLine();
             if (line != null) {
                 String[] parts = line.split(",");
@@ -46,25 +45,21 @@ public class DataLoader {
                 }
             }
 
-            // 2. Read Data Rows
             while ((line = br.readLine()) != null) {
                 if (line.trim().isEmpty()) continue;
                 
                 String[] parts = line.split(",");
                 double[] features = new double[numFeatures];
                 
-                // Parse features
                 for (int i = 0; i < numFeatures; i++) {
                     features[i] = Double.parseDouble(parts[i].trim());
                 }
                 featuresList.add(features);
 
-                // Parse label (last column)
                 int label = (int) Double.parseDouble(parts[numFeatures].trim());
                 labelsList.add(label);
             }
 
-            // Convert Lists to Arrays for Dataset
             double[][] featuresArray = featuresList.toArray(new double[0][]);
             int[] labelsArray = labelsList.stream().mapToInt(Integer::intValue).toArray();
 
@@ -81,7 +76,6 @@ public class DataLoader {
         List<String> headers = new ArrayList<>();
 
         try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
-            // 1. Read Header
             String line = br.readLine();
             if (line != null) {
                 String[] parts = line.split(",");
@@ -96,25 +90,21 @@ public class DataLoader {
                 featureNames[i] = headers.get(i);
             }
 
-            // 2. Read Data Rows
             while ((line = br.readLine()) != null) {
                 if (line.trim().isEmpty()) continue;
                 
                 String[] parts = line.split(",");
                 double[] features = new double[numFeatures];
                 
-                // Parse features
                 for (int i = 0; i < numFeatures; i++) {
                     features[i] = Double.parseDouble(parts[i].trim());
                 }
                 featuresList.add(features);
 
-                // Parse label (last column)
                 int label = (int) Double.parseDouble(parts[numFeatures].trim());
                 labelsList.add(label);
             }
 
-            // Convert Lists to Arrays for Dataset
             double[][] featuresArray = featuresList.toArray(new double[0][]);
             int[] labelsArray = labelsList.stream().mapToInt(Integer::intValue).toArray();
 
