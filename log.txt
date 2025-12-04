@@ -1,4 +1,4 @@
-Ryan Gertz: ~6h on scoring logic (F1/precision/recall computations in `src/Metrics.java`) and the first cut of the Java tree scaffold (`src/DecisionTree.java` + bootstrap code in `src/Main.java`).
+Ryan Gertz: ~5h on scoring logic (F1/precision/recall computations in `src/Metrics.java`) and the first cut of the Java tree scaffold (`src/DecisionTree.java` + bootstrap code in `src/Main.java`).
 
 Oleks Gorpy: ~5h on Python data work (`python-analysis/heart_disease_eda.ipynb`, SMOTE export in `python-analysis/artifacts/`, and evaluation notebook `python-evaluation/model_outputs_analysis.ipynb`) plus follow-up fixes driven by those notebooks.
 
