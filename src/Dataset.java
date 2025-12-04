@@ -1,5 +1,3 @@
-import java.util.*;
-
 /**
  * Represents a dataset with features and labels for training/testing
  */
@@ -7,20 +5,11 @@ public class Dataset {
     private final double[][] features;
     private final int[] labels;
     private final String[] featureNames;
-    private final Set<Integer> categoricalAttributes;
 
     public Dataset(double[][] features, int[] labels, String[] featureNames) {
         this.features = features;
         this.labels = labels;
         this.featureNames = featureNames;
-        this.categoricalAttributes = new HashSet<>();
-    }
-
-    public Dataset(double[][] features, int[] labels, String[] featureNames, Set<Integer> categoricalAttributes) {
-        this.features = features;
-        this.labels = labels;
-        this.featureNames = featureNames;
-        this.categoricalAttributes = categoricalAttributes != null ? new HashSet<>(categoricalAttributes) : new HashSet<>();
     }
 
     public double[][] getFeatures() {
@@ -55,7 +44,7 @@ public class Dataset {
             subsetLabels[i] = labels[indices[i]];
         }
 
-        return new Dataset(subsetFeatures, subsetLabels, featureNames, categoricalAttributes);
+        return new Dataset(subsetFeatures, subsetLabels, featureNames);
     }
 
     /**
@@ -69,10 +58,4 @@ public class Dataset {
         return labels[index];
     }
 
-    /**
-     * Get the set of categorical attribute indices
-     */
-    public Set<Integer> getCategoricalAttributes() {
-        return new HashSet<>(categoricalAttributes);
-    }
 }

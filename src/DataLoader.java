@@ -7,67 +7,6 @@ import java.util.*;
 public class DataLoader {
 
     /**
-     * Load dataset from CSV file with categorical feature specification
-     * @param filePath Path to CSV file
-     * @param categoricalFeatureNames Array of feature names that are categorical
-     * @return Dataset with categorical attributes specified
-     */
-    public static Dataset loadFromCSV(String filePath, String[] categoricalFeatureNames) throws IOException {
-        List<double[]> featuresList = new ArrayList<>();
-        List<Integer> labelsList = new ArrayList<>();
-        List<String> headers = new ArrayList<>();
-
-        try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
-            String line = br.readLine();
-            if (line != null) {
-                String[] parts = line.split(",");
-                for (String p : parts) {
-                    headers.add(p.trim());
-                }
-            }
-
-            int numFeatures = headers.size() - 1; // Last column is target
-            String[] featureNames = new String[numFeatures];
-            for(int i = 0; i < numFeatures; i++) {
-                featureNames[i] = headers.get(i);
-            }
-
-            // Map categorical feature names to indices
-            Set<Integer> categoricalIndices = new HashSet<>();
-            Set<String> categoricalSet = new HashSet<>();
-            for (String name : categoricalFeatureNames) {
-                categoricalSet.add(name.trim());
-            }
-            
-            for (int i = 0; i < numFeatures; i++) {
-                if (categoricalSet.contains(featureNames[i])) {
-                    categoricalIndices.add(i);
-                }
-            }
-
-            while ((line = br.readLine()) != null) {
-                if (line.trim().isEmpty()) continue;
-                
-                String[] parts = line.split(",");
-                double[] features = new double[numFeatures];
-                
-                for (int i = 0; i < numFeatures; i++) {
-                    features[i] = Double.parseDouble(parts[i].trim());
-                }
-                featuresList.add(features);
-
-                int label = (int) Double.parseDouble(parts[numFeatures].trim());
-                labelsList.add(label);
-            }
-
-            double[][] featuresArray = featuresList.toArray(new double[0][]);
-            int[] labelsArray = labelsList.stream().mapToInt(Integer::intValue).toArray();
-
-            return new Dataset(featuresArray, labelsArray, featureNames, categoricalIndices);
-        }
-    }
-
-    /**
      * Load dataset from CSV file
      */
     public static Dataset loadFromCSV(String filePath) throws IOException {

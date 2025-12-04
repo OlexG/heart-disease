@@ -17,12 +17,6 @@ public class Main {
             }
         }
 
-        String[] categoricalNames = {
-            "gender", "exercise_habits", "smoking", "family_heart_disease",
-            "diabetes", "high_blood_pressure", "low_hdl_cholesterol",
-            "high_ldl_cholesterol", "alcohol_consumption", "stress_level",
-            "sugar_consumption"
-        };
         String dataPath = "python-analysis/artifacts/features_model_ready_balanced.csv";
 
         try {
@@ -30,7 +24,7 @@ public class Main {
             logger.info("Saving run artifacts to: " + runOutputs.getRunDir().toAbsolutePath());
 
             logger.info("Loading dataset...");
-            Dataset dataset = DataLoader.loadFromCSV(dataPath, categoricalNames);
+            Dataset dataset = DataLoader.loadFromCSV(dataPath);
 
             logger.info("Dataset loaded:");
             logger.info("  Samples: " + dataset.getNumSamples());
