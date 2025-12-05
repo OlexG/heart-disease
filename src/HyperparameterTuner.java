@@ -1,13 +1,7 @@
 import java.util.*;
 
-/**
- * Hyperparameter tuner using grid search with K-fold cross-validation
- */
 public class HyperparameterTuner {
     
-    /**
-     * Enum for evaluation metrics
-     */
     public enum Metric {
         ACCURACY,
         F1_SCORE,
@@ -15,9 +9,6 @@ public class HyperparameterTuner {
         RECALL
     }
     
-    /**
-     * Result class to hold hyperparameter tuning results
-     */
     public static class TuningResult {
         private final int numTrees;
         private final Integer maxDepth;
@@ -72,9 +63,6 @@ public class HyperparameterTuner {
         }
     }
     
-    /**
-     * Parameter grid for hyperparameter search
-     */
     public static class ParameterGrid {
         private final int[] numTreesValues;
         private final Integer[] maxDepthValues;
@@ -94,9 +82,6 @@ public class HyperparameterTuner {
         public int[] getMinSamplesSplitValues() { return minSamplesSplitValues; }
         public int[] getMaxFeaturesValues() { return maxFeaturesValues; }
         
-        /**
-         * Calculate total number of combinations
-         */
         public int getTotalCombinations() {
             return numTreesValues.length * maxDepthValues.length * 
                    minSamplesSplitValues.length * maxFeaturesValues.length;
@@ -110,7 +95,7 @@ public class HyperparameterTuner {
     
     /**
      * Create a hyperparameter tuner
-     * @param kFolds Number of folds for cross-validation (default: 5)
+     * @param kFolds Number of folds for cross-validation (default: 10)
      * @param seed Random seed for reproducibility
      * @param metric Metric to optimize for (default: ACCURACY)
      * @param verbose Whether to print progress (default: true)
@@ -131,7 +116,7 @@ public class HyperparameterTuner {
     }
     
     public HyperparameterTuner() {
-        this(5, 42L, Metric.ACCURACY, true);
+        this(10, 42, Metric.ACCURACY, true);
     }
     
     /**
@@ -208,7 +193,7 @@ public class HyperparameterTuner {
                             );
                             
                             if (verbose) {
-                                System.out.printf("New best! %s=%.4f (std=%.4f) - numTrees=%d, maxDepth=%s, minSamplesSplit=%d, maxFeatures=%d\n",
+                                System.out.printf("FOUND A NEW BESTTTTT! %s=%.4f (std=%.4f) - numTrees=%d, maxDepth=%s, minSamplesSplit=%d, maxFeatures=%d\n",
                                     metric.name(), meanScore, stdScore,
                                     numTrees, maxDepth == null ? "unlimited" : maxDepth,
                                     minSamplesSplit, maxFeatures);
