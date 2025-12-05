@@ -30,3 +30,5 @@ Thumbs.db
 # Project Artifacts
 tree_viz.png
 tree_viz.dot
+
+.cursor/
